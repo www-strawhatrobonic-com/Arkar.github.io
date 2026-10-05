@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The New Technology</title>
+    <title>My Cyber Portal</title>
     <style>
         body {
             background-color: #121212;
@@ -19,16 +19,17 @@
 
         h1 {
             color: #00e5ff;
-            margin-top: 40px;
+            margin-top: 30px;
             font-size: 2.5rem;
             letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         /* Search Bar */
         .search-container {
             width: 100%;
             max-width: 600px;
-            margin: 20px 0 40px 0;
+            margin: 20px 0 35px 0;
         }
 
         .search-form {
@@ -68,7 +69,7 @@
             gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .app-card {
@@ -77,31 +78,42 @@
             align-items: center;
             text-decoration: none;
             color: #fff;
-            width: 80px;
-            padding: 10px;
-            border-radius: 12px;
-            transition: background 0.3s;
+            width: 85px;
+            padding: 12px 8px;
+            border-radius: 14px;
+            transition: transform 0.2s, background-color 0.3s;
         }
 
         .app-card:hover {
             background-color: #2a2a2a;
+            transform: translateY(-4px);
         }
 
         .app-icon {
-            width: 50px;
-            height: 50px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 22px;
             margin-bottom: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .youtube { background-color: #ff0000; }
-        .google { background-color: #4285f4; }
+        .app-card span {
+            font-size: 0.85rem;
+            color: #ddd;
+            text-align: center;
+        }
+
+        /* App Icon Colors */
+        .youtube { background-color: #ff0000; color: #fff; }
+        .google { background-color: #4285f4; color: #fff; }
         .wiki { background-color: #ffffff; color: #000; }
+        .gmail { background-color: #ea4335; color: #fff; }
+        .onepiece { background-color: #ff9900; color: #000; }
 
         /* Science Knowledge Section */
         .science-section {
@@ -117,6 +129,7 @@
             color: #00e5ff;
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
+            margin-top: 0;
         }
 
         .card-grid {
@@ -142,12 +155,14 @@
             color: #bbb;
             font-size: 0.9rem;
             line-height: 1.4;
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
 
-    <h1>The New Technology</h1>
+    <!-- Main Title (Change to your preferred portal name) -->
+    <h1>MY CYBER PORTAL</h1>
 
     <!-- 1. Google Search Bar -->
     <div class="search-container">
@@ -157,19 +172,36 @@
         </form>
     </div>
 
-    <!-- 2. Quick Apps -->
+    <!-- 2. Quick Apps Grid -->
     <div class="apps-container">
+        <!-- YouTube -->
         <a href="https://www.youtube.com" target="_blank" class="app-card">
             <div class="app-icon youtube">▶</div>
             <span>YouTube</span>
         </a>
+
+        <!-- Google -->
         <a href="https://www.google.com" target="_blank" class="app-card">
             <div class="app-icon google">G</div>
             <span>Google</span>
         </a>
+
+        <!-- Wikipedia -->
         <a href="https://www.wikipedia.org" target="_blank" class="app-card">
             <div class="app-icon wiki">W</div>
             <span>Wikipedia</span>
+        </a>
+
+        <!-- Gmail -->
+        <a href="https://mail.google.com" target="_blank" class="app-card">
+            <div class="app-icon gmail">✉</div>
+            <span>Gmail</span>
+        </a>
+
+        <!-- One Piece Official -->
+        <a href="https://one-piece.com" target="_blank" class="app-card">
+            <div class="app-icon onepiece">☠</div>
+            <span>One Piece</span>
         </a>
     </div>
 
