@@ -1,11 +1,196 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexTech Portal</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00e5ff;
+            margin-top: 40px;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px 0 40px 0;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 30px;
+            border: 2px solid #00e5ff;
+            background-color: #1e1e1e;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-button {
+            padding: 14px 25px;
+            border-radius: 30px;
+            border: none;
+            background-color: #00e5ff;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: #00b3cc;
+        }
+
+        /* App Shortcuts */
+        .apps-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .app-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            width: 80px;
+            padding: 10px;
+            border-radius: 12px;
+            transition: background 0.3s;
+        }
+
+        .app-card:hover {
+            background-color: #2a2a2a;
+        }
+
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .youtube { background-color: #ff0000; }
+        .google { background-color: #4285f4; }
+        .wiki { background-color: #ffffff; color: #000; }
+
+        /* Science Knowledge Section */
+        .science-section {
+            width: 100%;
+            max-width: 800px;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+
+        .science-section h2 {
+            color: #00e5ff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #00e5ff;
+        }
+
+        .info-card h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            color: #bbb;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to my website</h1>
-    <p>pyae sone aye is gay</p>
-  <h2>studying about science</h2>
+
+    <h1>NEXT-TECH PORTAL</h1>
+
+    <!-- 1. Google Search Bar -->
+    <div class="search-container">
+        <form class="search-form" action="https://www.google.com/search" method="GET" target="_blank">
+            <input type="text" name="q" class="search-input" placeholder="Search Google or type a URL..." required>
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
+    <!-- 2. Quick Apps -->
+    <div class="apps-container">
+        <a href="https://www.youtube.com" target="_blank" class="app-card">
+            <div class="app-icon youtube">▶</div>
+            <span>YouTube</span>
+        </a>
+        <a href="https://www.google.com" target="_blank" class="app-card">
+            <div class="app-icon google">G</div>
+            <span>Google</span>
+        </a>
+        <a href="https://www.wikipedia.org" target="_blank" class="app-card">
+            <div class="app-icon wiki">W</div>
+            <span>Wikipedia</span>
+        </a>
+    </div>
+
+    <!-- 3. Science Knowledge Vault -->
+    <div class="science-section">
+        <h2>🔬 Science Knowledge Base</h2>
+        <div class="card-grid">
+            <div class="info-card">
+                <h3>Quantum Physics</h3>
+                <p>Study of matter and energy at the most fundamental level.</p>
+            </div>
+            <div class="info-card">
+                <h3>Astrophysics</h3>
+                <p>Exploring the physics of astronomy, black holes, and the universe.</p>
+            </div>
+            <div class="info-card">
+                <h3>Robotics & AI</h3>
+                <p>Future automation, artificial intelligence, and cybernetics.</p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
