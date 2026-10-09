@@ -3,226 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cyber Portal</title>
+    <title>Global Glass - Science & Knowledge Hub</title>
     <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        h1 {
-            color: #00e5ff;
-            margin-top: 30px;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Search Bar */
-        .search-container {
+        body, html {
             width: 100%;
-            max-width: 600px;
-            margin: 20px 0 35px 0;
-        }
-
-        .search-form {
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 14px 20px;
-            border-radius: 30px;
-            border: 2px solid #00e5ff;
-            background-color: #1e1e1e;
+            height: 100vh;
+            overflow: hidden;
+            background: #0b0f19;
             color: #fff;
-            font-size: 16px;
-            outline: none;
         }
 
-        .search-button {
-            padding: 14px 25px;
-            border-radius: 30px;
-            border: none;
-            background-color: #00e5ff;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+        /* Weather Canvas Background */
+        #weather-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .search-button:hover {
-            background-color: #00b3cc;
-        }
-
-        /* App Shortcuts */
-        .apps-container {
+        /* Chrome Browser UI Container */
+        .browser-container {
+            position: relative;
+            z-index: 2;
+            width: 95vw;
+            height: 92vh;
+            margin: 4vh auto;
+            background: rgba(18, 24, 38, 0.75);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 40px;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        .app-card {
+        /* Chrome Top Bar */
+        .chrome-header {
+            background: rgba(10, 14, 23, 0.9);
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+            margin-right: 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .address-bar-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 20px;
+            padding: 6px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .address-bar-container input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            width: 100%;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        /* Main Workspace Inside Browser */
+        .browser-body {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar App Launcher */
+        .sidebar {
+            width: 70px;
+            background: rgba(10, 14, 23, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-decoration: none;
-            color: #fff;
-            width: 85px;
-            padding: 12px 8px;
-            border-radius: 14px;
-            transition: transform 0.2s, background-color 0.3s;
-        }
-
-        .app-card:hover {
-            background-color: #2a2a2a;
-            transform: translateY(-4px);
+            padding-top: 20px;
+            gap: 20px;
         }
 
         .app-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 22px;
-            margin-bottom: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 18px;
         }
 
-        .app-card span {
-            font-size: 0.85rem;
-            color: #ddd;
-            text-align: center;
+        .app-icon:hover, .app-icon.active {
+            background: #3b82f6;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
 
-        /* App Icon Colors */
-        .youtube { background-color: #ff0000; color: #fff; }
-        .google { background-color: #4285f4; color: #fff; }
-        .wiki { background-color: #ffffff; color: #000; }
-        .gmail { background-color: #ea4335; color: #fff; }
-        .onepiece { background-color: #ff9900; color: #000; }
-
-        /* Science Knowledge Section */
-        .science-section {
-            width: 100%;
-            max-width: 800px;
-            background-color: #1e1e1e;
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid #333;
-        }
-
-        .science-section h2 {
-            color: #00e5ff;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-
-        .card-grid {
+        /* Content Area */
+        .content-area {
+            flex-grow: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 25px;
+            overflow-y: auto;
         }
 
-        .info-card {
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #00e5ff;
+        /* Left Main Panel */
+        .main-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .info-card h3 {
-            margin-top: 0;
-            font-size: 1.1rem;
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
         }
 
-        .info-card p {
-            color: #bbb;
-            font-size: 0.9rem;
+        .hero-banner h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #60a5fa;
+        }
+
+        .hero-banner p {
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* YouTube & Embedded App Section */
+        .media-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .media-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #f8fafc;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Right Panel: News & Science Knowledge */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #38bdf8;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+
+        .news-item {
+            margin-bottom: 12px;
+            font-size: 13px;
             line-height: 1.4;
-            margin-bottom: 0;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .news-item:hover {
+            color: #60a5fa;
+        }
+
+        .news-item span {
+            display: block;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 3px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Main Title (Change to your preferred portal name) -->
-    <h1>MY CYBER PORTAL</h1>
+    <!-- Weather Background Canvas (Snow + Rain combined) -->
+    <canvas id="weather-canvas"></canvas>
 
-    <!-- 1. Google Search Bar -->
-    <div class="search-container">
-        <form class="search-form" action="https://www.google.com/search" method="GET" target="_blank">
-            <input type="text" name="q" class="search-input" placeholder="Search Google or type a URL..." required>
-            <button type="submit" class="search-button">Search</button>
-        </form>
-    </div>
-
-    <!-- 2. Quick Apps Grid -->
-    <div class="apps-container">
-        <!-- YouTube -->
-        <a href="https://www.youtube.com" target="_blank" class="app-card">
-            <div class="app-icon youtube">▶</div>
-            <span>YouTube</span>
-        </a>
-
-        <!-- Google -->
-        <a href="https://www.google.com" target="_blank" class="app-card">
-            <div class="app-icon google">G</div>
-            <span>Google</span>
-        </a>
-
-        <!-- Wikipedia -->
-        <a href="https://www.wikipedia.org" target="_blank" class="app-card">
-            <div class="app-icon wiki">W</div>
-            <span>Wikipedia</span>
-        </a>
-
-        <!-- Gmail -->
-        <a href="https://mail.google.com" target="_blank" class="app-card">
-            <div class="app-icon gmail">✉</div>
-            <span>Gmail</span>
-        </a>
-
-        <!-- One Piece Official -->
-        <a href="https://one-piece.com" target="_blank" class="app-card">
-            <div class="app-icon onepiece">☠</div>
-            <span>One Piece</span>
-        </a>
-    </div>
-
-    <!-- 3. Science Knowledge Vault -->
-    <div class="science-section">
-        <h2>🔬 Science Knowledge Base</h2>
-        <div class="card-grid">
-            <div class="info-card">
-                <h3>Quantum Physics</h3>
-                <p>Study of matter and energy at the most fundamental level.</p>
+    <!-- Chrome Browser Interface -->
+    <div class="browser-container">
+        <!-- Chrome Header -->
+        <div class="chrome-header">
+            <div class="window-controls">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
             </div>
-            <div class="info-card">
-                <h3>Astrophysics</h3>
-                <p>Exploring the physics of astronomy, black holes, and the universe.</p>
+            <div class="address-bar-container">
+                <span>🌐</span>
+                <input type="text" id="search-input" placeholder="Search science facts, medical news, or type URL...">
             </div>
-            <div class="info-card">
-                <h3>Robotics & AI</h3>
-                <p>Future automation, artificial intelligence, and cybernetics.</p>
+        </div>
+
+        <!-- Browser Body -->
+        <div class="browser-body">
+            <!-- Sidebar Apps -->
+            <div class="sidebar">
+                <div class="app-icon active" title="Home Hub">🏠</div>
+                <div class="app-icon" title="Science Knowledge">🔬</div>
+                <div class="app-icon" title="YouTube Feed">📺</div>
+                <div class="app-icon" title="Global News">📰</div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Left Panel -->
+                <div class="main-panel">
+                    <div class="hero-banner">
+                        <h1>Global Glass Knowledge Hub</h1>
+                        <p>Welcome to your advanced browsing experience. Explore cutting-edge scientific discoveries, medical breakthroughs, and nature's phenomena under a serene simulation of falling snow and gentle rain.</p>
+                    </div>
+
+                    <div class="media-section">
+                        <h3>Featured Science & Tech Stream (YouTube)</h3>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="right-panel">
+                    <div class="card">
+                        <h3>🔬 Daily Science & Medical Fact</h3>
+                        <p id="science-fact" style="font-size: 13px; line-height: 1.5; color: #cbd5e1;">
+                            Water is the only natural substance on Earth that exists abundantly in three physical states: solid, liquid, and gas.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>📰 Global Tech & Science News</h3>
+                        <div class="news-item">
+                            New quantum computing milestone achieved by researchers.
+                            <span>2 hours ago • Science Daily</span>
+                        </div>
+                        <div class="news-item">
+                            Breakthrough in renewable energy storage solutions.
+                            <span>5 hours ago • Tech Review</span>
+                        </div>
+                        <div class="news-item">
+                            Deep space telescope captures rare cosmic phenomenon.
+                            <span>1 day ago • Astronomy</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <script>
+        // Combined Snowing & Pouring (Rain) Animation Script
+        const canvas = document.getElementById('weather-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        const numParticles = 150;
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                length: Math.random() * 20 + 10, // For rain drop effect
+                radius: Math.random() * 3 + 1,   // For snow flake effect
+                speedY: Math.random() * 4 + 2,
+                speedX: Math.random() * 1 - 0.5,
+                type: Math.random() > 0.5 ? 'rain' : 'snow',
+                opacity: Math.random() * 0.5 + 0.3
+            });
+        }
+
+        function animateWeather() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                ctx.beginPath();
+                if (p.type === 'rain') {
+                    // Draw Rain Drop
+                    ctx.strokeStyle = `rgba(174, 219, 255, ${p.opacity})`;
+                    ctx.lineWidth = 1.5;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p.x + p.speedX, p.y + p.length);
+                    ctx.stroke();
+                } else {
+                    // Draw Snow Flake
+                    ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Update position
+                p.y += p.speedY + (p.type === 'rain' ? 5 : 0);
+                p.x += p.speedX;
+
+                // Reset position when out of screen
+                if (p.y > canvas.height) {
+                    p.y = -20;
+                    p.x = Math.random() * canvas.width;
+                }
+                if (p.x > canvas.width) {
+                    p.x = 0;
+                } else if (p.x < 0) {
+                    p.x = canvas.width;
+                }
+            });
+
+            requestAnimationFrame(animateWeather);
+        }
+
+        animateWeather();
+
+        // Simple interactive search bar simulation
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                alert('Searching Global Glass database for: ' + searchInput.value);
+            }
+        });
+    </script>
 </body>
 </html>
